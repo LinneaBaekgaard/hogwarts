@@ -5,7 +5,14 @@ import express from "express";
 import { pool } from "./db.js";
 
 import * as housesRepository from './repositories/houses.repository.js';
+import * as teachersRepository from './repositories/teachers.repository.js';
+import * as studentsRepository from './repositories/students.repository.js';
+import * as coursesRepository from './repositories/courses.repository.js';
+
 import * as housesController from './controllers/houses.controller.js';
+import * as teachersController from './controllers/teachers.controller.js';
+import * as studentsController from './controllers/students.controller.js';
+import * as coursesController from './controllers/courses.controller.js';
 
 const app = express();
 const port = 3000;
@@ -19,28 +26,12 @@ app.get("/", (req, res) => res.send("Hello World"));
 
 //GET all teachers
 app.get("/teachers", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM teachers");
-    console.log(result);
-
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
+  const allTeachers = await teachersController.getAllTeachers(req, res);
 });
 
 // GET single teacher by ID
 app.get("/teachers/:id", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM teachers WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
-
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
+  const getSingleTeacher = await teachersController.getSingleTeacher(req, res);
 });
 
 //CREATE new teacher
@@ -92,26 +83,14 @@ app.delete("/teachers/:id", async (req, res) => {
 
 // GET all students
 app.get("/students", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM students");
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
+  const allStudents = await studentsController.getAllStudents(req, res);
+
 });
 
 // GET single student by ID
 app.get("/students/:id", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM students WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+  const getSingleStudent = await studentsController.getSingleStudent(req, res);
 
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
 });
 
 // CREATE new student
@@ -221,26 +200,14 @@ app.delete("/houses/:id", async (req, res) => {
 
 // GET all courses
 app.get("/courses", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM courses");
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
+  const allCourses = await coursesController.getAllCourses(req, res);
+
 });
 
 // GET single course by ID
 app.get("/courses/:id", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM courses WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+  const singleCourse = await coursesController.getSingleCourse(req, res);
 
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
 });
 
 // CREATE new course
