@@ -1,0 +1,21 @@
+info:
+  name: create new course
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:3000/courses/
+  body:
+    type: json
+    data: |2-
+       {"name": "Transfiguration", 
+        "teacher": "Minerva McGonagall", 
+        "students": ["Harry Potter", "Ron Weasley", "Hermione Granger", "Neville Longbottom", "Hannah Abbott", "Ernie Macmillan", "Justin Finch-Fletchley", "Padma Patil", "Terry Boot", "Draco Malfoy", "Pansy Parkinson", "Vincent Crabbe", "Gregory Goyle", "Blaise Zabini"]}
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
