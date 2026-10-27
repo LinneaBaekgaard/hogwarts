@@ -4,6 +4,9 @@ import express from "express";
 // const Pool = require("./db");
 import { pool } from "./db.js";
 
+import * as housesRepository from './repositories/houses.repository.js';
+import * as housesController from './controllers/houses.controller.js';
+
 const app = express();
 const port = 3000;
 
@@ -160,26 +163,13 @@ app.delete("/students/:id", async (req, res) => {
 
 // GET all houses
 app.get("/houses", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM houses");
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
+  const allHouses = await housesController.getAllHouses(req, res);
 });
 
 // GET single house by ID
 app.get("/houses/:id", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM houses WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+  const singleHouse = await housesController.getSingleHouse(req, res);
 
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
 });
 
 // CREATE new house

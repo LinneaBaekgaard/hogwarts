@@ -10,6 +10,12 @@ http:
     - name: id
       value: ""
       type: path
+  body:
+    type: json
+    data: |-
+      {"name": "Harrer", 
+       "year": 3,
+       "house": "Gryfr"}
   auth: inherit
 
 settings:
