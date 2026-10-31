@@ -5,7 +5,7 @@
 - **GET** /teachers – Get all teachers
 - **GET** /teachers/:id – Get single teacher
 - **POST** /teachers – Create new teacher
-- **PUT** /teachers/:id - Update existing teacher
+- **PUT** /teachers/:id - Update existing teacher (som ikke virker i min kode)
 - **DELETE** /teachers/:id – Delete teacher
 
 ## Sådan bruges endpoint-testene
