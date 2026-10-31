@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:3000/course/:id
+  url: http://localhost:3000/courses/:id
   params:
     - name: id
       value: ""
