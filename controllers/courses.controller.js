@@ -1,4 +1,4 @@
-Pseudo
+
 import * as coursesRepository from '../repositories/courses.repository.js';
 
 // Get All courses
