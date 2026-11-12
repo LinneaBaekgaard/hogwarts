@@ -7,13 +7,13 @@ const studentsRouter = express.Router();
 //// STUDENTS ////
 
 // Get All Students
-studentsRouter.get('/students', studentsController.getAllStudents);
+studentsRouter.get('/', studentsController.getAllStudents);
 
 // Get Sinlge Student
-studentsRouter.get("/students/:id", studentsController.getSingleStudent);
+studentsRouter.get('/:id', studentsController.getSingleStudent);
 
 // Create new student
-studentsRouter.post('/students', studentsController.createStudent);
+studentsRouter.post('/', studentsController.createStudent);
 
 // Update existing student
 // Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre.

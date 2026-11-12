@@ -7,13 +7,13 @@ const teachersRouter = express.Router();
 //// TEACHERS ////
 
 // Get All Teachers 
-teachersRouter.get('/teachers', teachersController.getAllTeachers);
+teachersRouter.get('/', teachersController.getAllTeachers);
 
 // Get Sinlge Teachers
-teachersRouter.get("/teachers/:id", teachersController.getSingleTeacher);
+teachersRouter.get('/:id', teachersController.getSingleTeacher);
 
 // Create New Teacher 
-teachersRouter.post('/teachers', teachersController.createTeacher);
+teachersRouter.post('/', teachersController.createTeacher);
 
 // Update Existing Teacher 
 

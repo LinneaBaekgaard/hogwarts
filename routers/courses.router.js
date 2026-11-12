@@ -7,13 +7,13 @@ const coursesRouter = express.Router();
 //// COURSES ////
 
 // Get All Courses
-coursesRouter.get('/courses', coursesController.getAllCourses);
+coursesRouter.get('/', coursesController.getAllCourses);
 
 // Get Sinlge Course
-coursesRouter.get("/courses/:id", coursesController.getSingleCourse);
+coursesRouter.get('/:id', coursesController.getSingleCourse);
 
 // Create new course
-coursesRouter.post('/courses', coursesController.createCourse);
+coursesRouter.post('/', coursesController.createCourse);
 
 // Update existing course
 // Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre. 

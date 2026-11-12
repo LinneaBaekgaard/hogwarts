@@ -1,6 +1,9 @@
 // const express = require("express");
 import express from "express";
 
+// Global Error Handling
+import errorhandler from "./errorhandling/errorhandler.js";
+
 // const Pool = require("./db");
 import { pool } from "./db.js";
 
@@ -11,10 +14,10 @@ import * as studentsRepository from './repositories/students.repository.js';
 import * as coursesRepository from './repositories/courses.repository.js';
 
 // Controllers imports
-import * as housesController from './controllers/houses.controller.js';
-import * as teachersController from './controllers/teachers.controller.js';
-import * as studentsController from './controllers/students.controller.js';
-import * as coursesController from './controllers/courses.controller.js';
+// import * as housesController from './controllers/houses.controller.js';
+// import * as teachersController from './controllers/teachers.controller.js';
+// import * as studentsController from './controllers/students.controller.js';
+// import * as coursesController from './controllers/courses.controller.js';
 
 // Routes imports
 import housesRouter from './routers/houses.router.js';
@@ -31,15 +34,17 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => res.send("Hello World"));
 
 /////// HOUSES ///////
-app.use(housesRouter);
-
+app.use("/houses", housesRouter);
 /////// TEACHERS ///////
-app.use(teachersRouter);
-
+app.use("/teachers", teachersRouter);
 /////// STUDENTS ///////
-app.use(studentsRouter);
-
+app.use("/students", studentsRouter);
 /////// COURSES ///////
-app.use(coursesRouter);
+app.use("/courses", coursesRouter);
+
+// Error handling --------------------------------------------------
+app.use(errorhandler);
+
 
 app.listen(port, () => console.log(`Server kører på http://localhost:${port}`));
+

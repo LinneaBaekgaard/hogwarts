@@ -2,42 +2,27 @@ import * as studentsRepository from '../repositories/students.repository.js';
 
 // Get All Students
 export async function getAllStudents(req, res) {
-    try {
-        const allStudents = await studentsRepository.getAllStudents();
-        console.log("all students", allStudents);
-        res.json(allStudents);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Database error", code: err.code });
-    }
+    const allStudents = await studentsRepository.getAllStudents();
+    console.log("all students", allStudents);
+    res.json(allStudents);
 }
 
 // Get Single Student
 export async function getSingleStudent(req, res) {
-    try {
-        const id = req.params.id;
-        const student = await studentsRepository.getStudentById(id);
-        if (student) {
-            res.status(200).json(student);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Database error", code: err.code });
+    const id = req.params.id;
+    const student = await studentsRepository.getStudentById(id);
+    if (student) {
+        res.status(200).json(student);
+    } else {
+        res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
     }
 }
 
 // Create New Student
 export async function createStudent(req, res) {
-    try {
-        const student = req.body;
-        const newStudent = await studentsRepository.createStudent(student);
-        res.status(201).json(newStudent);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Database error", code: err.code });
-    }
+    const student = req.body;
+    const newStudent = await studentsRepository.createStudent(student);
+    res.status(201).json(newStudent);
 }
 
 // Update Existing Student
@@ -74,16 +59,11 @@ export async function createStudent(req, res) {
 
 // Delete Single Student
 export async function deleteStudent(req, res) {
-    try {
-        const id = req.params.id;
-        const deletedStudent = await studentsRepository.deleteStudent(id);
-        if (deletedStudent) {
-            res.sendStatus(204).json(deleteStudent);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Database error", code: err.code });
+    const id = req.params.id;
+    const deletedStudent = await studentsRepository.deleteStudent(id);
+    if (deletedStudent) {
+        return res.status(200).json(teacher);
     }
+
+    throw new HTTPError(404, "Teacher not found");
 }

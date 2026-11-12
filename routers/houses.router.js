@@ -13,28 +13,19 @@ const housesRouter = express.Router();
 
 // Get All Houses // 
 
-// Når klienten sender GET med '/houses' kører getAllHouses fra controlleren, og de modtager dermed alle huse. 
-housesRouter.get('/houses', housesController.getAllHouses);
+// Når klienten sender GET på '/houses' kører getAllHouses fra controlleren, og de modtager dermed alle huse. 
+housesRouter.get('/', housesController.getAllHouses);
 
 // Get Sinlge House //
 
 // Når klienten sender GET "/houses/:id" kører getSingleHouse fra controlleren og modtager dermed det enkelte hus. 
-housesRouter.get("/houses/:id", housesController.getSingleHouse);
+housesRouter.get('/:id', housesController.getHouseById);
 
 // Create New House //
 
 // Når klienten sender en POST med '/houses', kører createHouse fra controlleren og modtager dermed det nye oprettede hus. 
-housesRouter.post('/houses', housesController.createHouse);
+// housesRouter.post('/houses', housesController.createHouse);
 
-// Update Existing house //
-
-// Når klienten sender en PUT med "/houses/:id", kører updateHouse fra controlleren og modtager dermed det opdaterede hus.  
-// housesRouter.put("/houses/:id", housesController.updateHouse);
-
-// Delete Single House //
-
-// Når klienten sender en delete med "/houses/:id", kører deleteHouse fra controlleren og modtager dermed en besked på, at det gældende hus er slette. 
-// housesRouter.delete("/houses/:id", housesController.deleteHouse);
 
 // Eksporterer routeren som default så index kan importere og tilgå den. 
 export default housesRouter;

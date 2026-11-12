@@ -3,42 +3,27 @@ import * as coursesRepository from '../repositories/courses.repository.js';
 
 // Get All courses
 export async function getAllCourses(req, res) {
-    try {
-        const allCourses = await coursesRepository.getAllCourses();
-        console.log("all courses", allCourses);
-        res.json(allCourses);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Database error", code: err.code });
-    }
+    const allCourses = await coursesRepository.getAllCourses();
+    console.log("all courses", allCourses);
+    res.json(allCourses);
 }
 
 // Get single course
 export async function getSingleCourse(req, res) {
-    try {
-        const id = req.params.id;
-        const course = await coursesRepository.getCoursesById(id);
-        if (course) {
-            res.status(200).json(course);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        console.error(err);
-        res.stauts(500).json({ error: "Database error", code: err.code });
+    const id = req.params.id;
+    const course = await coursesRepository.getCoursesById(id);
+    if (course) {
+        res.status(200).json(course);
+    } else {
+        res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
     }
 }
 
 // Create new course
 export async function createCourse(req, res) {
-    try {
-        const course = req.body;
-        const newCourse = await coursesRepository.createCourse(course);
-        res.status(201).json(newCourse);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Database error", code: err.code });
-    }
+    const course = req.body;
+    const newCourse = await coursesRepository.createCourse(course);
+    res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
 }
 
 // Update single course
@@ -64,16 +49,11 @@ export async function createCourse(req, res) {
 
 // Delete single course
 export async function deleteCourse(req, res) {
-    try {
-        const id = req.params.id;
-        const deletedCourse = await coursesRepository.deleteCourse(id);
-        if (deletedCourse) {
-            res.sendStatus(204).json(deleteCourse);
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Database error", code: err.code });
+    const id = req.params.id;
+    const deletedCourse = await coursesRepository.deleteCourse(id);
+    if (deletedCourse) {
+        return res.status(200).json(teacher);
     }
+
+    throw new HTTPError(404, "Teacher not found");
 }
