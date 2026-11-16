@@ -19,15 +19,15 @@ export async function getCourseById(id) {
 
 // Create new course
 export async function createCourse(course) {
-    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING id, name, teacher, students",
-        [course.name, course.teacher, course.students]);
+    const result = await pool.query("INSERT INTO courses (name, teacher, students, type, level, year) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, teacher, students, type, level, year",
+        [course.name, course.teacher, course.students, course.type, course.level, course.year]);
     return result.rows[0];
 }
 
 // // Update single course
 export async function updatedCourse(id, newCourseData) {
-    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING id",
-        [newCourseData.name, newCourseData.teacher, newCourseData.students, id],
+    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3, type = $4, level = $5, year = $6 WHERE id = $7 RETURNING id",
+        [newCourseData.name, newCourseData.teacher, newCourseData.students, newCourseData.type, newCourseData.level, newCourseData.year,  id],
     );
 
     if(result.rowCount === 0) return null;
