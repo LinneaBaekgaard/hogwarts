@@ -12,7 +12,12 @@ http:
       type: path
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "name": "Test Testesen",
+        "house": "Gryffindor",
+        "year": 1
+      }
   auth: inherit
 
 settings:

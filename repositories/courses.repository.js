@@ -3,14 +3,14 @@ import { pool } from '../db.js';
 // Get All Courses
 export async function getAllCourses() {
     const result = await pool.query("SELECT * FROM courses");
-    console.log(result);
+ 
     return result.rows;
 }
 
 // Get sinlge course
-export async function getCoursesById(id) {
+export async function getCourseById(id) {
     const result = await pool.query("SELECT * FROM courses WHERE id =$1", [id]);
-    if (result.rowcount === 0) {
+    if (result.rowCount === 0) {
         return null;
     } else {
         return result.rows[0];
@@ -19,24 +19,22 @@ export async function getCoursesById(id) {
 
 // Create new course
 export async function createCourse(course) {
-    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING name, teacher, students",
+    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING id, name, teacher, students",
         [course.name, course.teacher, course.students]);
-    console.log(result);
-    return result.rows;
+    return result.rows[0];
 }
 
 // // Update single course
+export async function updatedCourse(id, newCourseData) {
+    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING id",
+        [newCourseData.name, newCourseData.teacher, newCourseData.students, id],
+    );
 
-// Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre. 
+    if(result.rowCount === 0) return null;
 
-// export async function updateCourse(id, course) {
-//     const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [course.name, course.teacher, course.students, id]);
-//     if (result.rowcount === 0) {
-//         return null;
-//     } else {
-//         return result.rows[0];
-//     }
-// }
+    const updatedId = result.rows[0].id;
+    return getCourseById(updatedId);
+}
 
 // Delete single course
 export async function deleteCourse(id) {

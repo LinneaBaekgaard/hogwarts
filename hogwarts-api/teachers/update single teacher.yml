@@ -5,11 +5,14 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:3000/teachers/:id
-  params:
-    - name: id
-      value: ""
-      type: path
+  url: http://localhost:3000/teachers/21
+  body:
+    type: json
+    data: |-
+      { "id": 21,
+      "name": "Albus Percival Wulfric Brian Dumbledore",
+       "house_id": 1
+      }
   auth: inherit
 
 settings:

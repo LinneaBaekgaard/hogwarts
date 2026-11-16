@@ -5,7 +5,16 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:3000/course
+  url: http://localhost:3000/courses/1
+  body:
+    type: json
+    data: |-
+      {
+        "id": 1,
+        "name": "Transfiguration",
+        "teacher": "Minerva McGonagall",
+        "students": ["Harry Potter"]
+      }
   auth: inherit
 
 settings:

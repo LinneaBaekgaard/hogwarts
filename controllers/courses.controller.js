@@ -1,59 +1,56 @@
-
-import * as coursesRepository from '../repositories/courses.repository.js';
+import * as coursesRepository from "../repositories/courses.repository.js";
+import HTTPError from "../errorhandling/HTTPError.js";
+import UpdateCourseDto from "../dtos/updatecourse.dto.js";
 
 // Get All courses
 export async function getAllCourses(req, res) {
-    const allCourses = await coursesRepository.getAllCourses();
-    console.log("all courses", allCourses);
-    res.json(allCourses);
+  const allCourses = await coursesRepository.getAllCourses();
+  console.log("all courses", allCourses);
+  res.json(allCourses);
 }
 
 // Get single course
 export async function getSingleCourse(req, res) {
-    const id = req.params.id;
-    const course = await coursesRepository.getCoursesById(id);
-    if (course) {
-        res.status(200).json(course);
-    } else {
-        res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
-    }
+  const id = req.params.id;
+  const course = await coursesRepository.getCourseById(id);
+  if (course) {
+    return res.status(200).json(course);
+  }
+
+  throw new HTTPError(404, "Course not found");
 }
 
 // Create new course
 export async function createCourse(req, res) {
-    const course = req.body;
-    const newCourse = await coursesRepository.createCourse(course);
-    res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
+  const course = req.body;
+  const newCourse = await coursesRepository.createCourse(course);
+
+  if (newCourse) {
+    return res.status(201).json(newCourse);
+  }
+  throw new HTTPError(404, "Course not found");
 }
 
 // Update single course
+export async function updateCourse(req, res) {
+  const input = req.body;
+  const id = req.params.id;
 
-// Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre. 
+  const oldCourse = await coursesRepository.getCourseById(id);
+  if (!oldCourse) throw new HTTPError(404, "Course does not exist");
 
-// export async function updateCourse(req, res) {
-//     try {
-//         const course = req.body;
-//         const id = req.params.id;
-//         const updatedCourse = await coursesRepository.updateCourse(id, course);
-//         if (updatedCourse) {
-//             res.status(200).json(updatedCourse);
-//         } else {
-//             res.sendStatus(404);
-//         }
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({ erro: "Database Error", code: err.code });
-//     }
-// }
+  const newCourseData = UpdateCourseDto.parse(input);
+  const newCourse = await coursesRepository.updatedCourse(id, newCourseData);
+
+  return res.status(201).json(newCourse);
+}
 
 // Delete single course
 export async function deleteCourse(req, res) {
-    const id = req.params.id;
-    const deletedCourse = await coursesRepository.deleteCourse(id);
-    if (deletedCourse) {
-        return res.status(200).json(teacher);
-    }
+  const id = req.params.id;
+  const deletedCourse = await coursesRepository.deleteCourse(id);
 
-    throw new HTTPError(404, "Teacher not found");
+  if (deletedCourse) return res.sendStatus(204);
+
+  throw new HTTPError(404, "Course does not exist");
 }

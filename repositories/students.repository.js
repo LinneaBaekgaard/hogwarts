@@ -19,27 +19,26 @@ export async function getStudentById(id) {
 
 // Create new student
 export async function createStudent(student) {
-    const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING name, house, year",
+    const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING id, name, house, year",
         [student.name, student.house, student.year],);
-    console.log(result);
-    return result.rows;
+    return result.rows[0];
 }
 
-// Jeg kan ikke få update functionen til at virke. Jeg omskriver den forkert. 
+// Update existing student
+export async function updatedStudent(id, newStudentData) {
+    const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING id",
+        [newStudentData.name, newStudentData.house, newStudentData.year, id],
+    );
 
-// // Update existing student
-// export async function updateStudent(id) {
-//     const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [student.name, student.house, student.year, id]);
-//     if (result.rowCount === 0) {
-//         return null;
-//     } else {
-//         return result.rows[0];
-//     }
-// }
+    if(result.rowCount === 0) return null;
+
+    const updatedId = result.rows[0].id;
+    return getStudentById(updatedId);
+}
 
 // Delete single Student
 export async function deleteStudent(id) {
-    const del = await pool.query("DELETE FROM students WHERE id = $1", [id]);
+    const del = await pool.query("DELETE FROM students WHERE id = $1 RETURNING id", [id]);
     if (del.rowCount === 0) {
         return null;
     } else {

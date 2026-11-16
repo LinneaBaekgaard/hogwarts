@@ -16,12 +16,10 @@ studentsRouter.get('/:id', studentsController.getSingleStudent);
 studentsRouter.post('/', studentsController.createStudent);
 
 // Update existing student
-// Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre.
-
-// studentsRouter.put("/students/:id", studentsController.updateStudent);
+studentsRouter.put("/:id", studentsController.updateStudent);
 
 // Delete single student
-studentsRouter.delete("/students/:id", studentsController.deleteStudent);
+studentsRouter.delete("/:id", studentsController.deleteStudent);
 
 
 export default studentsRouter;

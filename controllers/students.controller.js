@@ -1,69 +1,55 @@
-import * as studentsRepository from '../repositories/students.repository.js';
+import * as studentsRepository from "../repositories/students.repository.js";
+import HTTPError from "../errorhandling/HTTPError.js";
+import UpdateStudentDto from "../dtos/updatestudent.dto.js";
 
 // Get All Students
 export async function getAllStudents(req, res) {
-    const allStudents = await studentsRepository.getAllStudents();
-    console.log("all students", allStudents);
-    res.json(allStudents);
+  const allStudents = await studentsRepository.getAllStudents();
+  console.log("all students", allStudents);
+  res.json(allStudents);
 }
 
 // Get Single Student
 export async function getSingleStudent(req, res) {
-    const id = req.params.id;
-    const student = await studentsRepository.getStudentById(id);
-    if (student) {
-        res.status(200).json(student);
-    } else {
-        res.status(404).json({ message: "House does not exist", error: "House not found", statusCode: "404" });
-    }
+  const id = req.params.id;
+  const student = await studentsRepository.getStudentById(id);
+  if (student) {
+    return res.status(200).json(student);
+  }
+
+  throw new HTTPError(404, "Student not found");
 }
 
 // Create New Student
 export async function createStudent(req, res) {
-    const student = req.body;
-    const newStudent = await studentsRepository.createStudent(student);
-    res.status(201).json(newStudent);
+  const student = req.body;
+  const newStudent = await studentsRepository.createStudent(student);
+  if (newStudent) {
+    return res.status(201).json(newStudent);
+  }
+  throw new HTTPError(404, "Student not found");
 }
 
 // Update Existing Student
+export async function updateStudent(req, res) {
+  const input = req.body;
+  const id = req.params.id;
 
-// FØR OMSKRIVNING:
-// app.put("/students/:id", async (req, res) => {
-//   const student = req.body;
-//   const id = req.params.id;
+  const oldStudent = await studentsRepository.getStudentById(id);
+  if (!oldStudent) throw new HTTPError(404, "Student does not exist");
 
-//   try {
-//     const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [student.name, student.house, student.year, id]);
+  const newStudentData = UpdateStudentDto.parse(input);
+  const newStudent = await studentsRepository.updatedStudent(id, newStudentData);
 
-//     if (result.rowCount === 0) return res.sendStatus(404);
-
-//     res.status(200).json(result.rows[0]);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ error: "Database error" });
-//   }
-// });
-
-// FORSØGT OMSKREVET:
-// export async function updateStudent(req, res) {
-//     try {
-//         const student = req.body;
-//         const id = req.params.id;
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({ error: "Database error", code: err.code });
-//     }
-// }
-
+  return res.status(201).json(newStudent);
+}
 
 // Delete Single Student
 export async function deleteStudent(req, res) {
-    const id = req.params.id;
-    const deletedStudent = await studentsRepository.deleteStudent(id);
-    if (deletedStudent) {
-        return res.status(200).json(teacher);
-    }
+  const id = req.params.id;
+  const deletedStudent = await studentsRepository.deleteStudent(id);
 
-    throw new HTTPError(404, "Teacher not found");
+  if (deletedStudent) return res.sendStatus(204);
+
+  throw new HTTPError(404, "Student does not exist");
 }

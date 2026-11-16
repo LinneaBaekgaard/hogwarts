@@ -16,11 +16,9 @@ teachersRouter.get('/:id', teachersController.getSingleTeacher);
 teachersRouter.post('/', teachersController.createTeacher);
 
 // Update Existing Teacher 
-
-// Jeg kan ikke få det til at virke. Jeg omskriver forkert i controllers og repository.
-// teachersRouter.put("/teachers/:id", teachersController.updateTeacher);
+teachersRouter.put("/:id", teachersController.updateTeacher);
 
 // Delete Single Teacher
-teachersRouter.delete("/teachers/:id", teachersController.deleteTeacher);
+teachersRouter.delete("/:id", teachersController.deleteTeacher);
 
 export default teachersRouter;

@@ -1,24 +1,20 @@
 // custom error beskeder:
 
 export default (err, req, res, next) => {
+  console.log(err.message);
 
-    console.log(err.message);
-    console.log(err.statusCode);
+  let statusCode = err.statusCode || 500;
+  let error = err.error || "internal server error";
+  let message = err.message || "something went wrong";
 
-    let error = "Internal Server Error";
-    if (err.statusCode == 404) {
-        error = "Not Found";
-    } else if (err.statusCode == 400) {
-        error = "Bad Request";
-    }
-
-    // TO DO: Alle andre error navne laves her! 
-
-    res.status(err.statusCode).json(
-        {
-            message: err.message,
-            error: error,
-            statusCode: err.statusCode
-        }
-    );
+  if (err.statusCode == 404) {
+    error = "not found";
+  } else if (err.statusCode == 400) {
+    error = "bad request";
+  }
+  res.status(statusCode).json({
+    message: message,
+    error: error,
+    statusCode: statusCode,
+  });
 };

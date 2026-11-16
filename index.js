@@ -13,12 +13,6 @@ import * as teachersRepository from './repositories/teachers.repository.js';
 import * as studentsRepository from './repositories/students.repository.js';
 import * as coursesRepository from './repositories/courses.repository.js';
 
-// Controllers imports
-// import * as housesController from './controllers/houses.controller.js';
-// import * as teachersController from './controllers/teachers.controller.js';
-// import * as studentsController from './controllers/students.controller.js';
-// import * as coursesController from './controllers/courses.controller.js';
-
 // Routes imports
 import housesRouter from './routers/houses.router.js';
 import teachersRouter from './routers/teachers.router.js';

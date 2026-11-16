@@ -16,11 +16,9 @@ coursesRouter.get('/:id', coursesController.getSingleCourse);
 coursesRouter.post('/', coursesController.createCourse);
 
 // Update existing course
-// Jeg kan ikke finde ud af, hvordan jeg omskriver update for at det virker. Jeg har prøvet forskellige måder, men det vil ikke køre. 
-
-// coursesRouter.put("/houses/:id", coursesController.updateCourse);
+coursesRouter.put("/:id", coursesController.updateCourse);
 
 // Delete single course
-coursesRouter.delete("/courses/:id", coursesController.deleteCourse);
+coursesRouter.delete("/:id", coursesController.deleteCourse);
 
 export default coursesRouter;
