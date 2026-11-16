@@ -2,8 +2,10 @@
 // const { Pool } = require("pg");
 
 import "dotenv/config";
-import { Pool } from "pg";
+import { Pool, types } from "pg";
 
+// Gør så datoer i students ikke viser tidspunkt, men blot dato:
+types.setTypeParser(1082, (value) => value);
 
 export const pool = new Pool({
   host: process.env.PGHOST,

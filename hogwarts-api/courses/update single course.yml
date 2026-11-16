@@ -13,7 +13,10 @@ http:
         "id": 1,
         "name": "Transfiguration",
         "teacher": "Minerva McGonagall",
-        "students": ["Harry Potter"]
+        "students": ["Harry Potter"],
+        "type": "core",
+        "level": "OWL",
+        "year": 3
       }
   auth: inherit
 
