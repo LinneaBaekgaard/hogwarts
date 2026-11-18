@@ -30,6 +30,8 @@ export async function createTeacher(req, res) {
     return res.status(201).json(newTeacher);
   }
    throw new HTTPError(404, "Teacher not found");
+
+   // jeg ved ikke helt hvordan jeg sørger for valideringen mellem currently_active og employment_start, således at de ikke overlapper
 }
 
 // Update Existing Teacher //

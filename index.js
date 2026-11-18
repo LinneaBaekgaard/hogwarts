@@ -12,12 +12,18 @@ import * as housesRepository from './repositories/houses.repository.js';
 import * as teachersRepository from './repositories/teachers.repository.js';
 import * as studentsRepository from './repositories/students.repository.js';
 import * as coursesRepository from './repositories/courses.repository.js';
+import * as gradesRepository from './repositories/grades.repository.js';
+import * as examsRepository from './repositories/exams.repository.js';
+
 
 // Routes imports
 import housesRouter from './routers/houses.router.js';
 import teachersRouter from './routers/teachers.router.js';
 import studentsRouter from './routers/students.router.js';
 import coursesRouter from './routers/courses.router.js';
+import gradesRouter from './routers/grades.router.js';
+import examsRouter from './routers/exams.router.js';
+
 
 const app = express();
 const port = 3000;
@@ -35,6 +41,11 @@ app.use("/teachers", teachersRouter);
 app.use("/students", studentsRouter);
 /////// COURSES ///////
 app.use("/courses", coursesRouter);
+/////// GRADES ///////
+app.use("/grades", gradesRouter);
+/////// EXAMS ///////
+app.use("/exams", examsRouter);
+
 
 // Error handling --------------------------------------------------
 app.use(errorhandler);
